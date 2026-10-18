@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flappy Bird -- Test Runner</title>
+  <!--
+    How to run:
+      Open this file in any modern browser (Chrome, Firefox, Edge, Safari).
+      Then open DevTools (F12) and inspect the Console tab.
+
+    What you will see:
+      - PASS / FAIL lines for each synchronous test (57 tests across 7 sections).
+      - [async] lines for 6 additional DOM-event / canvas-pixel checks that
+        require at least one requestAnimationFrame cycle to complete.
+      - A summary line at the end counting sync-only passed / failed.
+
+    game.js is loaded first so its IIFE runs and attaches event listeners
+    before game.test.js executes.  game.test.js is deferred to ensure the
+    DOM is fully ready when it accesses the canvas element.
+  -->
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { margin: 0; background: #1a1a2e; display: flex; flex-direction: column;
+           align-items: center; justify-content: flex-start; min-height: 100vh; }
+    .test-banner {
+      width: 480px;
+      background: #16213e;
+      color: #e2e8f0;
+      font-family: monospace;
+      font-size: 13px;
+      padding: 12px 16px;
+      border-radius: 0 0 8px 8px;
+      border: 1px solid #0f3460;
+      border-top: none;
+      text-align: center;
+    }
+    .test-banner strong { color: #f6d935; }
+    .test-banner code  { color: #48cae4; }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="480" height="640"></canvas>
+  <div class="test-banner">
+    <strong>Test mode</strong> &mdash; open <code>DevTools &rarr; Console</code> to see results.<br>
+    game.js loads first so all event listeners are live before tests run.
+  </div>
+
+  <!-- game.js must come first: its IIFE attaches the event listeners that
+       the DOM-simulation tests in game.test.js depend on. -->
+  <script src="game.js"></script>
+
+  <!-- game.test.js is deferred so it executes after the DOM is parsed and
+       after game.js has run. defer also preserves source order, so the
+       game loop has had at least one rAF tick by the time test code runs. -->
+  <script src="game.test.js" defer></script>
+</body>
+</html>
